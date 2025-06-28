@@ -4,8 +4,14 @@ import { FaFacebookF, FaLinkedinIn } from "react-icons/fa";
 const Footer = () => {
   return (
     <footer className="bg-black text-gray-300 py-6 px-4">
-      <div className="max-w-7xl mx-auto border-t border-gray-600 pt-4 flex flex-col md:flex-row items-center justify-between space-y-4 md:space-y-0">
-
+      <div className="flex items-center space-x-2">
+        <img
+          src="assets/footer.png"
+          alt="Neth BookPoint Logo"
+          className="h-30"
+        />
+      </div>
+      <div className="max-w-7xl mx-auto border-t border-gray-600 pt-4 flex flex-col md:flex-row items-center justify-between space-y-4 md:space-y-0 md:px-6">
         <p className="text-center md:text-left text-sm">
           © 2024 |{" "}
           <a href="#" className="underline">
@@ -18,7 +24,6 @@ const Footer = () => {
           </span>
         </p>
 
-
         <div className="flex space-x-4">
           <a
             href="#"
@@ -30,7 +35,7 @@ const Footer = () => {
             href="#"
             className="text-gray-300 hover:text-yellow-500 transition"
           >
-            <FaLinkedinIn size={18} />
+            <FaLinkedinIn size={20} />
           </a>
         </div>
       </div>

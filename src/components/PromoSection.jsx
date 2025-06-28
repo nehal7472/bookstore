@@ -41,13 +41,7 @@ const PromoSection = () => {
           </button>
         </div>
       </div>
-              <div className="flex items-center space-x-2">
-          <img
-            src="assets/footer.png"
-            alt="Neth BookPoint Logo"
-            className="h-30"
-          />
-        </div>
+     
     </div>
   );
 };
