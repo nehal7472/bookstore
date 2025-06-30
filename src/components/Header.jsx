@@ -25,7 +25,6 @@ const Header = () => {
         </div>
       </div>
 
-      {/* Desktop Nav */}
       <nav className="hidden md:flex items-center gap-6 text-white">
         <NavLink
           to="/"
@@ -77,6 +76,16 @@ const Header = () => {
         >
           Sellers
         </NavLink>
+        <NavLink
+          to="/admin"
+          className={({ isActive }) =>
+            isActive
+              ? "text-yellow-500 border-b border-yellow-500"
+              : "px-6 py-2 border border-yellow-600  rounded hover:bg-yellow-700 hover:text-white  transition"
+          }
+        >
+          Admin
+        </NavLink>
         <FiBell className="text-xl" />
         <div className="flex flex-col items-center">
           <img
@@ -88,41 +97,88 @@ const Header = () => {
         </div>
       </nav>
 
-      {/* Mobile Menu Icon */}
-      <div className="md:hidden text-white z-50" onClick={() => setMenuOpen(!menuOpen)}>
-        {menuOpen ? <FiX className="text-2xl" /> : <FiMenu className="text-2xl" />}
+      <div
+        className="md:hidden text-white z-50"
+        onClick={() => setMenuOpen(!menuOpen)}
+      >
+        {menuOpen ? (
+          <FiX className="text-2xl" />
+        ) : (
+          <FiMenu className="text-2xl" />
+        )}
       </div>
 
-      {/* Mobile Menu */}
       <div
         className={`absolute top-20 left-0 w-full bg-black text-white px-6 py-4 flex flex-col gap-4 transition-all duration-300 md:hidden shadow-lg z-40 ${
-          menuOpen ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-5 pointer-events-none"
+          menuOpen
+            ? "opacity-100 translate-y-0"
+            : "opacity-0 -translate-y-5 pointer-events-none"
         }`}
       >
-        <NavLink to="/" onClick={() => setMenuOpen(false)} className={({ isActive }) =>
-          isActive ? "text-yellow-500 border-b border-yellow-500" : "hover:text-yellow-500"
-        }>
+        <NavLink
+          to="/"
+          onClick={() => setMenuOpen(false)}
+          className={({ isActive }) =>
+            isActive
+              ? "text-yellow-500 border-b border-yellow-500"
+              : "hover:text-yellow-500"
+          }
+        >
           Home
         </NavLink>
-        <NavLink to="/about" onClick={() => setMenuOpen(false)} className={({ isActive }) =>
-          isActive ? "text-yellow-500 border-b border-yellow-500" : "hover:text-yellow-500"
-        }>
+        <NavLink
+          to="/about"
+          onClick={() => setMenuOpen(false)}
+          className={({ isActive }) =>
+            isActive
+              ? "text-yellow-500 border-b border-yellow-500"
+              : "hover:text-yellow-500"
+          }
+        >
           About
         </NavLink>
-        <NavLink to="/shop-now" onClick={() => setMenuOpen(false)} className={({ isActive }) =>
-          isActive ? "text-yellow-500 border-b border-yellow-500" : "hover:text-yellow-500"
-        }>
+        <NavLink
+          to="/shop-now"
+          onClick={() => setMenuOpen(false)}
+          className={({ isActive }) =>
+            isActive
+              ? "text-yellow-500 border-b border-yellow-500"
+              : "hover:text-yellow-500"
+          }
+        >
           Shop
         </NavLink>
-        <NavLink to="/delivery-team" onClick={() => setMenuOpen(false)} className={({ isActive }) =>
-          isActive ? "text-yellow-500 border-b border-yellow-500" : "hover:text-yellow-500"
-        }>
+        <NavLink
+          to="/delivery-team"
+          onClick={() => setMenuOpen(false)}
+          className={({ isActive }) =>
+            isActive
+              ? "text-yellow-500 border-b border-yellow-500"
+              : "hover:text-yellow-500"
+          }
+        >
           Delivery Team
         </NavLink>
-        <NavLink to="/sellers" onClick={() => setMenuOpen(false)} className={({ isActive }) =>
-          isActive ? "text-yellow-500 border-b border-yellow-500" : "hover:text-yellow-500"
-        }>
+        <NavLink
+          to="/sellers"
+          onClick={() => setMenuOpen(false)}
+          className={({ isActive }) =>
+            isActive
+              ? "text-yellow-500 border-b border-yellow-500"
+              : "hover:text-yellow-500"
+          }
+        >
           Sellers
+        </NavLink>
+        <NavLink
+          to="/admin"
+          className={({ isActive }) =>
+            isActive
+              ? "text-yellow-500 border-b border-yellow-500"
+              : "text-center px-6 py-2 border border-yellow-600  rounded hover:bg-yellow-700 hover:text-white  transition"
+          }
+        >
+          Admin
         </NavLink>
         <div className="flex items-center gap-2 pt-2 border-t border-gray-600">
           <FiBell className="text-xl" />

@@ -15,12 +15,20 @@ const Export = () => {
         <p className="text-lg md:text-xl text-gray-700 mb-8">
           We’re working hard to bring you something amazing! 🚧
         </p>
-        <Link
-          className="mt-6 px-6 py-2 border border-yellow-600  rounded hover:bg-yellow-700 hover:text-white  transition"
-          to="/admin/products"
-        >
-          Go To Products Page
-        </Link>
+        <div className="flex flex-col items-center">
+          <Link
+            className="mt-6 px-6 py-2 border border-yellow-600  rounded hover:bg-yellow-700 hover:text-white  transition"
+            to="/admin/products"
+          >
+            Go To Products Page
+          </Link>
+          <Link
+            className="mt-6 px-6 py-2 border border-yellow-600  rounded hover:bg-yellow-700 hover:text-white  transition"
+            to="/"
+          >
+            Go To Front end page
+          </Link>
+        </div>
       </div>
     </div>
   );
