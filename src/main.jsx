@@ -2,6 +2,8 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { Provider } from "react-redux";
+import { store } from "./store/store"; // Ensure this path is correct
 import AdminLayout from "./layout/AdminLayout";
 import Products from "./pages/admin/Products";
 import FrontendLayout from "./layout/FrontendLayout";
@@ -19,27 +21,29 @@ import Admin from "./pages/admin/Admin";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <BrowserRouter>
-      <Routes>
-        {/* Frontend Routes */}
-        <Route path="/" element={<FrontendLayout />}>
-          <Route index element={<Home />} />
-          <Route path="shop-now" element={<ShopNow />} />
-          <Route path="about" element={<About />} />
-          <Route path="delivery-team" element={<DeliveryTeam />} />
-          <Route path="sellers" element={<Sellers />} />
-        </Route>
-        {/* Admin Routes  */}
-        <Route path="/admin" element={<AdminLayout />}>
-          <Route index element={<Admin />} />
-          <Route path="products" element={<Products />} />
-          <Route path="customers" element={<Customers />} />
-          <Route path="reports" element={<Reports />} />
-          <Route path="geography" element={<Geography />} />
-          <Route path="conversations" element={<Conversations />} />
-          <Route path="export" element={<Export />} />
-        </Route>
-      </Routes>
-    </BrowserRouter>
+    <Provider store={store}>
+      <BrowserRouter>
+        <Routes>
+          {/* Frontend Routes */}
+          <Route path="/" element={<FrontendLayout />}>
+            <Route index element={<Home />} />
+            <Route path="shop-now" element={<ShopNow />} />
+            <Route path="about" element={<About />} />
+            <Route path="delivery-team" element={<DeliveryTeam />} />
+            <Route path="sellers" element={<Sellers />} />
+          </Route>
+          {/* Admin Routes  */}
+          <Route path="/admin" element={<AdminLayout />}>
+            <Route index element={<Admin />} />
+            <Route path="products" element={<Products />} />
+            <Route path="customers" element={<Customers />} />
+            <Route path="reports" element={<Reports />} />
+            <Route path="geography" element={<Geography />} />
+            <Route path="conversations" element={<Conversations />} />
+            <Route path="export" element={<Export />} />
+          </Route>
+        </Routes>
+      </BrowserRouter>
+    </Provider>
   </StrictMode>
 );

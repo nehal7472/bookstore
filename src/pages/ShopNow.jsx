@@ -1,14 +1,16 @@
 import { useState } from "react";
 import BooksCard from "../components/BooksCard";
-import BooksData from "../data/booksData";
+import { useSelector } from "react-redux";
 
 const categories = ["All", "Novel", "Translations", "Kids' Stories"];
 
 const ShopNow = () => {
+  const { filteredBooks } = useSelector((state) => state.book);
+
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [searchTerm, setSearchTerm] = useState("");
 
-  const filteredBooks = BooksData.filter((book) => {
+  const filteredBook = filteredBooks.filter((book) => {
     const matchesCategory =
       selectedCategory === "All" || book.category === selectedCategory;
 
@@ -53,8 +55,8 @@ const ShopNow = () => {
         />
       </div>
       <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 justify-items-center">
-        {filteredBooks.length > 0 ? (
-          filteredBooks.map((book) => <BooksCard key={book.id} book={book} />)
+        {filteredBook.length > 0 ? (
+          filteredBook.map((book) => <BooksCard key={book.id} book={book} />)
         ) : (
           <p className="col-span-full text-gray-500 text-center">
             No books found matching your search.

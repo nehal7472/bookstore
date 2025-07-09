@@ -1,19 +1,42 @@
-import { useState } from "react";
-import productsData from "../../data/productsData";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  setSearch,
+  setRowsPerPage,
+  setCurrentPage,
+  toggleModal,
+  startEditProduct,
+  deleteProduct,
+  setCategoryFilter,
+} from "../../store/books/productSlice";
 import { FiFilter } from "react-icons/fi";
+import { AiFillEdit } from "react-icons/ai";
+import { MdDelete } from "react-icons/md";
+import { useState } from "react";
+import AddProductModal from "../../components/AddProductModal";
 
 const Products = () => {
-  const [search, setSearch] = useState("");
-  const [rowsPerPage, setRowsPerPage] = useState(10);
-  const [currentPage, setCurrentPage] = useState(1);
+  const dispatch = useDispatch();
+  const { products, search, rowsPerPage, currentPage, categoryFilter } =
+    useSelector((state) => state.product);
 
-  const filteredProducts = productsData.filter((product) => {
+  const [showFilterDropdown, setShowFilterDropdown] = useState(false);
+
+  const uniqueCategories = ["All", ...new Set(products.map((p) => p.category))];
+
+  const filteredProducts = products.filter((product) => {
     const term = search.toLowerCase();
-    return (
+    const matchesSearch =
       product.name.toLowerCase().includes(term) ||
       product.description.toLowerCase().includes(term) ||
-      product.status.toLowerCase().includes(term)
-    );
+      ((term === "active" || term === "inactive") &&
+        product.status.toLowerCase() === term) ||
+      product.category.toLowerCase().includes(term) ||
+      product.price.toString().includes(term);
+
+    const matchesCategory =
+      categoryFilter === "All" || product.category === categoryFilter;
+
+    return matchesSearch && matchesCategory;
   });
 
   const totalPages = Math.ceil(filteredProducts.length / rowsPerPage);
@@ -24,39 +47,61 @@ const Products = () => {
   );
 
   const handlePrev = () => {
-    if (currentPage > 1) setCurrentPage(currentPage - 1);
+    if (currentPage > 1) dispatch(setCurrentPage(currentPage - 1));
   };
 
   const handleNext = () => {
-    if (currentPage < totalPages) setCurrentPage(currentPage + 1);
+    if (currentPage < totalPages) dispatch(setCurrentPage(currentPage + 1));
   };
 
   const handleRowsChange = (e) => {
-    setRowsPerPage(Number(e.target.value));
-    setCurrentPage(1);
+    dispatch(setRowsPerPage(Number(e.target.value)));
   };
 
   return (
     <div className="w-full">
       <div className="flex justify-between items-center mb-6 flex-wrap gap-4">
-        <div className="flex items-center gap-2">
-          <button className="p-2 rounded-md border border-gray-300 bg-white text-gray-600 hover:bg-gray-50">
+        <div className="flex items-center gap-2 relative">
+          <button
+            onClick={() => setShowFilterDropdown(!showFilterDropdown)}
+            className="p-2 rounded-md border border-gray-300 bg-white text-gray-600 hover:bg-gray-50"
+            title="Filter by category"
+          >
             <FiFilter className="w-6 h-6" />
           </button>
+
+          {showFilterDropdown && (
+            <div className="absolute z-10 top-12 left-0 bg-white border border-gray-300 shadow rounded w-48">
+              {uniqueCategories.map((cat) => (
+                <button
+                  key={cat}
+                  onClick={() => {
+                    dispatch(setCategoryFilter(cat));
+                    setShowFilterDropdown(false);
+                  }}
+                  className={`block px-4 py-2 text-left w-full hover:bg-blue-100 ${
+                    categoryFilter === cat ? "bg-blue-100 font-semibold" : ""
+                  }`}
+                >
+                  {cat}
+                </button>
+              ))}
+            </div>
+          )}
 
           <input
             type="text"
             placeholder="Search by name, description or status..."
             className="border border-gray-300 rounded-md px-4 py-2 w-72 shadow-sm focus:outline-none focus:ring focus:ring-blue-200"
             value={search}
-            onChange={(e) => {
-              setSearch(e.target.value);
-              setCurrentPage(1);
-            }}
+            onChange={(e) => dispatch(setSearch(e.target.value))}
           />
         </div>
 
-        <button className="bg-blue-600 hover:bg-blue-700 text-white font-medium px-4 py-2 rounded-md shadow">
+        <button
+          onClick={() => dispatch(toggleModal(true))}
+          className="bg-blue-600 hover:bg-blue-700 text-white font-medium px-4 py-2 rounded-md shadow"
+        >
           + Add item
         </button>
       </div>
@@ -73,6 +118,7 @@ const Products = () => {
               <th className="px-4 py-3 font-medium text-gray-700">Status</th>
               <th className="px-4 py-3 font-medium text-gray-700">Price</th>
               <th className="px-4 py-3 font-medium text-gray-700">Category</th>
+              <th className="px-4 py-3 font-medium text-gray-700">Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -99,11 +145,27 @@ const Products = () => {
                   </td>
                   <td className="px-4 py-3">${product.price.toFixed(2)}</td>
                   <td className="px-4 py-3">{product.category}</td>
+                  <td className="px-4 py-3 flex gap-2">
+                    <button
+                      title="Edit"
+                      onClick={() => dispatch(startEditProduct(product))}
+                      className="text-blue-600 hover:text-blue-800"
+                    >
+                      <AiFillEdit className="text-xl" />
+                    </button>
+                    <button
+                      title="Delete"
+                      onClick={() => dispatch(deleteProduct(product.id))}
+                      className="text-red-600 hover:text-red-800"
+                    >
+                      <MdDelete className="text-xl" />
+                    </button>
+                  </td>
                 </tr>
               ))
             ) : (
               <tr>
-                <td colSpan="6" className="px-4 py-6 text-center text-gray-500">
+                <td colSpan="7" className="px-4 py-6 text-center text-gray-500">
                   No products found.
                 </td>
               </tr>
@@ -147,6 +209,8 @@ const Products = () => {
           </button>
         </div>
       </div>
+
+      <AddProductModal />
     </div>
   );
 };
