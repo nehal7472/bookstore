@@ -5,7 +5,7 @@ import {
   removeFromCart,
 } from "../store/books/cartSlice";
 import { useState } from "react";
-import { FaCartPlus } from "react-icons/fa";
+import { FaCartPlus, FaTrashAlt } from "react-icons/fa";
 import { IoClose } from "react-icons/io5";
 
 const CartModal = () => {
@@ -74,7 +74,7 @@ const CartModal = () => {
                           onClick={() => dispatch(removeFromCart(item.id))}
                           className="text-red-500 ml-2"
                         >
-                          🗑
+                          <FaTrashAlt />
                         </button>
                       </div>
                     </li>
