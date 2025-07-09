@@ -1,3 +1,4 @@
+// books/bookSlice.js
 import { createSlice } from "@reduxjs/toolkit";
 import booksData from "../../data/booksData";
 
@@ -5,28 +6,40 @@ const initialState = {
   allBooks: booksData,
   filteredBooks: booksData,
   searchQuery: "",
-};//35m 
+  selectedCategory: "All",
+};
 
-export const bookSlice = createSlice({
+const bookSlice = createSlice({
   name: "book",
   initialState,
-  reducers  : {
-    setBooks: (state, action) => {
-      state.allBooks = action.payload;
-      state.filteredBooks = action.payload;
+  reducers: {
+    setSearchQuery: (state, action) => {
+      state.searchQuery = action.payload;
     },
-    filterBooks: (state, action) => {
-      const searchTerm = action.payload.toLowerCase();
-      state.filteredBooks = state.allBooks.filter((book) =>
-        book.title.toLowerCase().includes(searchTerm)
-      );
-      state.searchQuery = searchTerm;
+    setCategory: (state, action) => {
+      state.selectedCategory = action.payload;
     },
-  }
+    filterBooks: (state) => {
+      let result = state.allBooks;
+
+      if (state.selectedCategory !== "All") {
+        result = result.filter(
+          (book) => book.category === state.selectedCategory
+        );
+      }
+
+      if (state.searchQuery) {
+        const searchLower = state.searchQuery.toLowerCase();
+        result = result.filter((book) =>
+          book.title.toLowerCase().includes(searchLower)
+        );
+      }
+
+      state.filteredBooks = result;
+    },
+  },
 });
 
-
-export const { setBooks, filterBooks } = bookSlice.actions;
-
+export const { setSearchQuery, setCategory, filterBooks } = bookSlice.actions;
 
 export default bookSlice.reducer;
