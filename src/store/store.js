@@ -1,10 +1,22 @@
-import { configureStore } from "@reduxjs/toolkit";
+import { configureStore, combineReducers } from "@reduxjs/toolkit";
+import { persistStore, persistReducer } from "redux-persist";
+import storage from "redux-persist/lib/storage";
 import bookReducer from "./books/bookSlice";
 import productReducer from "./books/productSlice";
 
-export const store = configureStore({
-  reducer: {
-    book: bookReducer,
-    product: productReducer,
-  },
+const rootReducer = combineReducers({
+  book: bookReducer,
+  product: productReducer,
 });
+
+const persistConfig = {
+  key: "root",
+  storage,
+};
+const persistedReducer = persistReducer(persistConfig, rootReducer);
+
+export const store = configureStore({
+  reducer: persistedReducer,
+});
+
+export const persistor = persistStore(store);
