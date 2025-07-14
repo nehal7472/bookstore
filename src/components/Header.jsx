@@ -18,7 +18,7 @@ const Header = () => {
           className="h-14 w-auto object-contain"
         />
         <div className="text-yellow-500 font-bold text-xl">
-          NETH <span className="text-white">BOOKPOINT</span>
+          BD <span className="text-white">BOOKPOINT</span>
           <p className="text-[10px] text-white italic leading-none">
             A Stop for Great Reads
           </p>

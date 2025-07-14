@@ -12,10 +12,27 @@ export default {
     },
 
     fontFamily: {
-      sans: ["Graphik", "sans-serif"],
+      sans: ["Inter", "sans-serif"],
       serif: ["Merriweather", "serif"],
     },
     extend: {
+      animation: {
+        gradient: "gradientBG 10s ease infinite",
+        fadeIn: "fadeIn 1.2s ease forwards",
+      },
+      keyframes: {
+        gradientBG: {
+          "0%, 100%": { backgroundPosition: "0% 50%" },
+          "50%": { backgroundPosition: "100% 50%" },
+        },
+        fadeIn: {
+          "0%": { opacity: 0, transform: "translateY(20px)" },
+          "100%": { opacity: 1, transform: "translateY(0)" },
+        },
+      },
+      backgroundSize: {
+        "size-200": "200% 200%",
+      },
       colors: {
         primaryBgColor: "#ffffff",
         secondaryBgColor: {
